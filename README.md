@@ -4,6 +4,8 @@
 
 This n8n workflow automates the process of collecting, analyzing, and routing customer feedback. It's designed to streamline a company's response to customer inquiries by using AI to instantly classify feedback, ensuring the right department receives the right information quickly. This reduces manual effort, improves response times, and helps teams prioritize issues and feature requests more effectively.
 
+![Preview Screenshot]("Flow Preview.png")
+
 -----
 
 ## 📖 Case Study
