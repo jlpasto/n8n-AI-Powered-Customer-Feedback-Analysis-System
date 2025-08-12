@@ -1,0 +1,535 @@
+{
+  "name": "AI-Powered Customer Feedback Analysis System",
+  "nodes": [
+    {
+      "parameters": {
+        "tableId": "customer_feedback",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "feedback_id",
+              "fieldValue": "={{ $json.feedback_id }}"
+            },
+            {
+              "fieldId": "customer_name",
+              "fieldValue": "={{ $json.customer_name }}"
+            },
+            {
+              "fieldId": "customer_email",
+              "fieldValue": "={{ $json.customer_email }}"
+            },
+            {
+              "fieldId": "feedback_message",
+              "fieldValue": "={{ $json.feedback_message }}"
+            },
+            {
+              "fieldId": "sentiment",
+              "fieldValue": "={{ $json.sentiment }}"
+            },
+            {
+              "fieldId": "category",
+              "fieldValue": "={{ $json.category }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        104
+      ],
+      "id": "7b91e5e1-81d9-4c7d-904f-f8a547de95d1",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "QpWRQzKag4wgcrNR",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1mE9OsUQGzPREL8EtnOIm8-dp7m7Msm4mnwBJjDoaiWc",
+          "mode": "list",
+          "cachedResultName": "Live Customer Feedback",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mE9OsUQGzPREL8EtnOIm8-dp7m7Msm4mnwBJjDoaiWc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1mE9OsUQGzPREL8EtnOIm8-dp7m7Msm4mnwBJjDoaiWc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ new Date().toISOString() }}",
+            "Feedback ID": "={{ $json.feedback_id }}",
+            "Customer Name": "={{ $json.customer_name }}",
+            "Customer Email": "={{ $json.customer_email }}",
+            "Feedback Message": "={{ $json.feedback_message }}",
+            "Sentiment": "={{ $json.sentiment }}",
+            "Category": "={{ $json.category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Feedback ID",
+              "displayName": "Feedback ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Customer Name",
+              "displayName": "Customer Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Customer Email",
+              "displayName": "Customer Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Feedback Message",
+              "displayName": "Feedback Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sentiment",
+              "displayName": "Sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1024,
+        296
+      ],
+      "id": "bcece4b1-c5ce-4650-bfb8-da94513bb494",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Pe2M4jFGIfzzgWdn",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Category }}",
+                    "rightValue": "Feature Request",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1a92d06a-d690-4794-baaf-c2282dd836c8"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Feature Request"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7df89e78-49af-4c4e-9a04-c2a29b4b8e47",
+                    "leftValue": "={{ $json.Category }}",
+                    "rightValue": "Bug Report",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Bug Report"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9822de8b-c183-4567-a14d-c788b7b8b9f6",
+                    "leftValue": "={{ $json.Category }}",
+                    "rightValue": "General Inquiry",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "General Inquiry"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none",
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1248,
+        176
+      ],
+      "id": "ee2b6894-2f7c-4112-9a91-1d3e1f1a7e5b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6756088b-daa6-4bec-9501-0173b3b7a06a",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        200
+      ],
+      "id": "4286b6f5-6b83-44c4-a59b-3ee2e97173e8",
+      "name": "Form Webhook",
+      "webhookId": "6756088b-daa6-4bec-9501-0173b3b7a06a"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst parsedItems = items.map((item) => {\n  const rawRequest = JSON.parse(item?.json?.body?.rawRequest);\n  return {\n    name: rawRequest?.q8_name,\n    email: rawRequest?.q7_email,\n    feedback: rawRequest?.q9_feedback,\n    submitDate: rawRequest?.submitDate,\n  };\n});\nreturn parsedItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        200
+      ],
+      "id": "19c0a1ff-397e-4792-b0bc-ec5c3f546a44",
+      "name": "Parse Response"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=As a customer feedback analysis expert, analyze the following user-submitted text.\n\nUser Feedback: \"{{ $('Parse Response').item.json.feedback }}\"\n\nBased on the feedback, provide your analysis ONLY in a raw JSON object format, with no other text before or after it. The JSON object must contain two keys:\n1. \"sentiment\": Classify the sentiment as one of these exact strings: \"Positive\", \"Negative\", or \"Neutral\".\n2. \"category\": Classify the topic as one of these exact strings: \"Bug Report\", \"Feature Request\", \"Billing Issue\", \"Praise\", or \"General Inquiry\".\n\nExample output:\n{\n  \"sentiment\": \"Negative\",\n  \"category\": \"Bug Report\"\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        448,
+        200
+      ],
+      "id": "50eb092b-7140-4a11-9aa4-349669b85c25",
+      "name": "Feedback Analysis",
+      "credentials": {
+        "openAiApi": {
+          "id": "FUDGOV1uaUYTufpO",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Get the AI's response content (which is a JSON string)\nconst aiResponseString = $input.first().json.message.content\n\n// A try-catch block prevents workflow failure.\nlet aiData;\ntry {\n  aiData = JSON.parse(aiResponseString);\n} catch (error) {\n  // If parsing fails, set default values so the workflow can continue\n  aiData = {\n    sentiment: \"Uncertain\",\n    category: \"Needs Review\"\n  };\n}\n\n// Generate a unique feedback ID\nconst feedbackId = `FB-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;\n\n// Combine original data, AI analysis, and the new ID into one clean object\nconst finalOutput = {\n  feedback_id: feedbackId,\n  customer_name: $('Parse Response').first().json.name,\n  customer_email: $('Parse Response').first().json.email,\n  feedback_message: $('Parse Response').first().json.feedback,\n  sentiment: aiData.sentiment,\n  category: aiData.category\n};\n\n// Return the final, structured object for the next nodes to use\nreturn finalOutput;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        200
+      ],
+      "id": "bce406fd-2e14-4985-8228-3125769cff9f",
+      "name": "Parse Response1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Customer Email'] }}",
+        "subject": "=We've received your feedback!",
+        "message": "=Hi {{ $json['Customer Name'] }}, thank you for your feedback. We've received it and routed it to the correct team for review. Your tracking ID is {{ $json['Feedback ID'] }}.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1248,
+        400
+      ],
+      "id": "be123b7c-f6ed-40ff-9072-b08781b8bfdf",
+      "name": "Send message to customer",
+      "webhookId": "fb3f78bf-4369-485f-a5d8-3a173585e5ac",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IE86DLZA9Kzhw71L",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "jhonloydpastorin.03@gmail.com",
+        "subject": "=New Feature Request | ID:  {{ $('Parse Response1').item.json.feedback_id }}",
+        "message": "=<h3>A new feature request has been submitted.</h3> <p><strong>Customer:</strong> {{ $json['Customer Name'] }} ({{ $json['Customer Email'] }})</p>  <p><strong>Feedback ID:</strong> {{ $json['Feedback ID'] }}</p> <p><strong>Message:</strong></p> <blockquote>{{ $json['Feedback Message'] }}</blockquote>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1472,
+        0
+      ],
+      "id": "e8c911bc-f057-4421-8117-0a4399c2f603",
+      "name": "Send a message to Product Team",
+      "webhookId": "3db9deec-eb95-48b7-953b-c3d38e7e9a45",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IE86DLZA9Kzhw71L",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "jhonloydpastorin.03@gmail.com",
+        "subject": "=New Bug Report | ID: {{ $json['Feedback ID'] }}",
+        "message": "=<h3>A new bug report has been submitted.</h3> <p><strong>Customer:</strong> {{ $json['Customer Name'] }} ({{ $json['Customer Email'] }})</p> \n<p><strong>Feedback ID:</strong> {{ $json['Feedback ID'] }}</p> <p><strong>Message:</strong></p> <blockquote>{{ $json['Feedback Message'] }}</blockquote>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1472,
+        192
+      ],
+      "id": "76af7014-59bc-4922-b4b3-3d07581877ed",
+      "name": "Send a message to IT Department",
+      "webhookId": "fb3f78bf-4369-485f-a5d8-3a173585e5ac",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IE86DLZA9Kzhw71L",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "jhonloydpastorin.03@gmail.com",
+        "subject": "=New General feedback | ID: {{ $json['Feedback ID'] }}",
+        "message": "=<h3>A new general feedback has been submitted.</h3> <p><strong>Customer:</strong> {{ $json['Customer Name'] }} ({{ $json['Customer Email'] }})</p> \n<p><strong>Feedback ID:</strong> {{ $json['Feedback ID'] }}</p> <p><strong>Message:</strong></p> <blockquote>{{ $json['Feedback Message'] }}</blockquote>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1472,
+        384
+      ],
+      "id": "d25c711f-d09a-4e8c-9cc6-4933e456b991",
+      "name": "Send a message to Customer Service Team",
+      "webhookId": "fb3f78bf-4369-485f-a5d8-3a173585e5ac",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IE86DLZA9Kzhw71L",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send message to customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a message to Product Team",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message to IT Department",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message to Customer Service Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Response": {
+      "main": [
+        [
+          {
+            "node": "Feedback Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Feedback Analysis": {
+      "main": [
+        [
+          {
+            "node": "Parse Response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Response1": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message to Product Team": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "84582551-b86c-4f82-b574-bcad31f1b8dc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "68fe891f55307e74b32da75f2eeea4c3743d5b53352a8eeacc5ebff024390e5c"
+  },
+  "id": "uoX2H7i8JyfAiJTj",
+  "tags": []
+}
